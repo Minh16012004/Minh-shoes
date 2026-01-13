@@ -6,12 +6,12 @@ import Login from './pages/Login'
 
 function App() {
   return (
-    <Layout>
-      <Routes>
+    <Routes>
+      <Route element={<Layout />}>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
-      </Routes>
-    </Layout>
+      </Route>
+    </Routes>
   )
 }
 
