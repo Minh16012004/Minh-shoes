@@ -1,7 +1,6 @@
-// client/src/api/cart.api.js
 import axios from 'axios'
 
-const API_URL = 'http://localhost:5000/api/cart'
+const API_URL = import.meta.env.VITE_API_URL + '/api/cart'
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token')
@@ -14,22 +13,24 @@ const getAuthHeaders = () => {
 
 export const cartAPI = {
   getCart: () => axios.get(API_URL, getAuthHeaders()),
-  
-  addToCart: (productId, quantity, size) => 
-    axios.post(`${API_URL}/add`, 
-      { productId, quantity, size }, 
+
+  addToCart: (productId, quantity, size) =>
+    axios.post(
+      `${API_URL}/add`,
+      { productId, quantity, size },
       getAuthHeaders()
     ),
-  
-  updateItem: (itemId, quantity) => 
-    axios.put(`${API_URL}/update`, 
-      { itemId, quantity }, 
+
+  updateItem: (itemId, quantity) =>
+    axios.put(
+      `${API_URL}/update`,
+      { itemId, quantity },
       getAuthHeaders()
     ),
-  
-  removeItem: (itemId) => 
+
+  removeItem: (itemId) =>
     axios.delete(`${API_URL}/remove/${itemId}`, getAuthHeaders()),
-  
-  clearCart: () => 
+
+  clearCart: () =>
     axios.delete(`${API_URL}/clear`, getAuthHeaders())
 }
