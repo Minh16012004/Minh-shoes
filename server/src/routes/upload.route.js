@@ -19,6 +19,7 @@ router.post('/single', upload.single('image'), (req, res) => {
 
 
 // Upload nhiều ảnh
+
 router.post('/multiple', upload.array('images', 5), (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
@@ -27,7 +28,7 @@ router.post('/multiple', upload.array('images', 5), (req, res) => {
 
     const baseUrl = `${req.protocol}://${req.get('host')}`;
 
-    const fileUrls = req.files.map(file => 
+    const fileUrls = req.files.map(file =>
       `${baseUrl}/uploads/products/${file.filename}`
     );
 
