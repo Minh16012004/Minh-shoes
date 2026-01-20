@@ -16,7 +16,9 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin:[ 'http://localhost:5173',
+  "https://minh-shoes-37dt.vercel.app"
+  ],
   credentials: true
 }));
 app.use(express.json());
