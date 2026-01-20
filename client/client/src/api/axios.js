@@ -2,7 +2,7 @@
 import axios from 'axios';
 
 const instance = axios.create({
-  baseURL: 'http://localhost:5000/api', // URL backend của bạn
+  baseURL: 'https://minh-shoes-1.onrender.com', // URL backend của bạn
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
