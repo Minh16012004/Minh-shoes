@@ -141,7 +141,8 @@ export default function Checkout() {
       await cartAPI.clearCart();
 
       alert('Đặt hàng thành công!');
-      navigate(`/orders/${response.data.order._id}`);
+      // navigate(`/orders/${response.data.order._id}`);
+      navigate(`/profile`);
     } catch (error) {
       console.error('Order error:', error);
       alert(error.response?.data?.message || 'Đặt hàng thất bại!');

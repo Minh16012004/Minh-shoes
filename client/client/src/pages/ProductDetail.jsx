@@ -1,4 +1,4 @@
-// client/src/pages/ProductDetail.jsx
+// client/src/pages/ProductDetail.jsx - FIXED
 import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { productAPI } from '../api/product.api'
@@ -69,7 +69,7 @@ export default function ProductDetail() {
     }
   }
 
-  // ✅ CẬP NHẬT handleBuyNow - Thêm vào Cart API rồi chuyển Checkout
+  // ✅ FIX: Mua ngay - Xóa giỏ hàng cũ rồi thêm sản phẩm mới
   const handleBuyNow = async () => {
     const token = localStorage.getItem('token')
     if (!token) {
@@ -84,10 +84,13 @@ export default function ProductDetail() {
     }
 
     try {
-      // Thêm sản phẩm vào Cart API
+      // ✅ BƯỚC 1: Xóa toàn bộ giỏ hàng cũ
+      await cartAPI.clearCart()
+      
+      // ✅ BƯỚC 2: Thêm sản phẩm mới vào giỏ
       await cartAPI.addToCart(product._id, quantity, selectedSize)
       
-      // Chuyển sang trang Checkout - Checkout sẽ tự động lấy từ Cart API
+      // ✅ BƯỚC 3: Chuyển sang trang Checkout
       navigate('/checkout')
     } catch (error) {
       console.error('Error:', error)

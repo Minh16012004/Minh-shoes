@@ -9,6 +9,7 @@ export default function Sidebar({ isOpen }) {
     { path: '/admin/dashboard', icon: '📊', label: 'Dashboard' },
     { path: '/admin/products', icon: '👕', label: 'Sản phẩm' },
     { path: '/admin/brands', icon: '🏷️', label: 'Thương hiệu' },
+    { path: '/admin/orders', icon: '📦', label: 'Đơn hàng' },
     { path: '/admin/users', icon: '👥', label: 'Người dùng' },
   ];
 

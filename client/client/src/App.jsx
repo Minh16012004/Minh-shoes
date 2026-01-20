@@ -17,6 +17,7 @@ import Dashboard from './pages/admin/Dashboard';
 import ProductManage from './pages/admin/ProductManage';
 import BrandManage from './pages/admin/BrandManage';
 import UserManage from './pages/admin/UserManage';
+import AdminOrders from './pages/admin/AdminOrders';
 
 // Protected Route Component
 function AdminRoute({ children }) {
@@ -59,6 +60,7 @@ function App() {
         <Route path="products" element={<ProductManage />} />
         <Route path="brands" element={<BrandManage />} />
         <Route path="users" element={<UserManage />} />
+        <Route path="/admin/orders" element={<AdminOrders />} />
       </Route>
     </Routes>
   );

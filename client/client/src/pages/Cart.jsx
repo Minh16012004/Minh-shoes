@@ -1,4 +1,4 @@
-// client/src/pages/Cart.jsx
+// client/src/pages/Cart.jsx - FIXED
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { cartAPI } from '../api/cart.api'
@@ -78,6 +78,15 @@ export default function Cart() {
     } finally {
       setUpdating(false)
     }
+  }
+
+  // ✅ THÊM hàm handleCheckout
+  const handleCheckout = () => {
+    if (!cart || cart.items.length === 0) {
+      alert('Giỏ hàng trống!')
+      return
+    }
+    navigate('/checkout')
   }
 
   if (loading) {
@@ -253,8 +262,11 @@ export default function Cart() {
                 </div>
               </div>
 
-              {/* Checkout Button */}
-              <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-xl transition transform hover:scale-105 mb-4">
+              {/* ✅ FIX: Thêm onClick cho nút Thanh toán */}
+              <button 
+                onClick={handleCheckout}
+                className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-4 rounded-xl font-bold text-lg hover:shadow-xl transition transform hover:scale-105 mb-4"
+              >
                 Thanh toán
               </button>
 
