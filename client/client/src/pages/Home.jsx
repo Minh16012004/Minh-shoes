@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { Heart, Star, Loader2, Zap, Award, TrendingUp, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { productAPI } from '../api/product.api';
+import { cartAPI } from '../api/cart.api';
 
 const ShoeStore = () => {
+  const navigate = useNavigate();
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     fetchProducts();
+    checkAuth();
   }, []);
+
+  const checkAuth = () => {
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+  };
 
   const fetchProducts = async () => {
     try {
@@ -36,24 +46,29 @@ const ShoeStore = () => {
     }).format(price);
   };
 
-  const addToCart = (product) => {
-    // Lưu vào localStorage
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const existingItem = cart.find(item => item.id === product.id);
-    
-    if (existingItem) {
-      existingItem.quantity += 1;
-    } else {
-      cart.push({ ...product, quantity: 1 });
+  const addToCart = async (product) => {
+    if (!isLoggedIn) {
+      alert('Vui lòng đăng nhập để thêm vào giỏ hàng!');
+      navigate('/login');
+      return;
     }
-    
-    localStorage.setItem('cart', JSON.stringify(cart));
-    
-    // Hiển thị thông báo
-    alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
-    
-    // Trigger event để update cart count ở header (nếu có)
-    window.dispatchEvent(new Event('cartUpdated'));
+
+    const availableSize = product.sizes?.find(s => s.stock > 0);
+    if (!availableSize) {
+      alert('Sản phẩm hiện đã hết hàng!');
+      return;
+    }
+
+    try {
+      await cartAPI.addToCart(product._id, 1, availableSize.size);
+      alert('Đã thêm vào giỏ hàng!');
+      
+      // Trigger event để TopBar update số lượng
+      window.dispatchEvent(new Event('cartUpdated'));
+    } catch (error) {
+      console.error('Error adding to cart:', error);
+      alert(error.response?.data?.message || 'Có lỗi xảy ra!');
+    }
   };
 
   const categories = [
